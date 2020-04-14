@@ -39,15 +39,16 @@ public class Pathfinder : MonoBehaviour
 
     private void CreatePath()
     {
-        path.Add(endWaypoint);
+        SetAsPath(endWaypoint);
 
         Waypoint previous = endWaypoint.exploredFrom;
-        while(previous != null)
+        while(previous != startWaypoint)
         {
-            path.Add(previous);
             previous = previous.exploredFrom;
+            SetAsPath(previous);
         }
 
+        SetAsPath(startWaypoint);
         path.Reverse();
     }
 
@@ -101,8 +102,12 @@ public class Pathfinder : MonoBehaviour
 
     private void ColorStartAndEnd()
     {
-        startWaypoint.SetTopColor(Color.yellow);
-        endWaypoint.SetTopColor(Color.yellow);
+    }
+
+    private void SetAsPath(Waypoint waypoint)
+    {
+        path.Add(waypoint);
+        waypoint.isPlaceable = false;
     }
 
     private void LoadBlock()
