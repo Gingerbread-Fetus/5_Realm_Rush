@@ -40,7 +40,7 @@ public class CubeEditor : MonoBehaviour
         string labelText = waypoint.GetGridPos().x +
             "," +
             waypoint.GetGridPos().y ;
-        textMesh.text = labelText;
+        //textMesh.text = labelText; //todo may want to look into how to get this to work when the text object is inactive
         gameObject.name = labelText;
     }
 }

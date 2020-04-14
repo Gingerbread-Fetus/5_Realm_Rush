@@ -78,7 +78,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094999709}
-  m_Text: 0,0
+  m_Text: 2,-3
   m_OffsetZ: 0
   m_CharacterSize: 2
   m_LineSpacing: 1
@@ -171,7 +171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7708512287280903964
 Transform:
   m_ObjectHideFlags: 0
