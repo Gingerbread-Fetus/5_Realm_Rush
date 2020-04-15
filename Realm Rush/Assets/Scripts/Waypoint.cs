@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
-    [SerializeField] Color exploredColor = Color.blue;
     //public is okay as this is a data class
     public bool isExplored = false;
     public bool isPlaceable = true;
     public Waypoint exploredFrom;
-    Vector2Int gridPos;
 
+    Vector2Int gridPos;
+    
     const int gridSize = 10;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -45,7 +40,7 @@ public class Waypoint : MonoBehaviour
         {
             if (isPlaceable)
             {
-                print(gameObject.name + " Tower placement"); 
+                FindObjectOfType<TowerFactory>().AddTower(this);
             }
             else
             {

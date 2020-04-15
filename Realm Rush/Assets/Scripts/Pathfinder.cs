@@ -32,7 +32,6 @@ public class Pathfinder : MonoBehaviour
     private void CalculatePath()
     {
         LoadBlock();
-        ColorStartAndEnd();
         BreadthFirstSearch();
         CreatePath();
     }
@@ -44,8 +43,8 @@ public class Pathfinder : MonoBehaviour
         Waypoint previous = endWaypoint.exploredFrom;
         while(previous != startWaypoint)
         {
-            previous = previous.exploredFrom;
             SetAsPath(previous);
+            previous = previous.exploredFrom;
         }
 
         SetAsPath(startWaypoint);
@@ -98,10 +97,6 @@ public class Pathfinder : MonoBehaviour
             queue.Enqueue(neighbor);
             neighbor.exploredFrom = searchCenter;
         }
-    }
-
-    private void ColorStartAndEnd()
-    {
     }
 
     private void SetAsPath(Waypoint waypoint)

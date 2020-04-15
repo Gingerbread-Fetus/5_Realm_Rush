@@ -6,13 +6,19 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     [SerializeField] int hitPoints = 10;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] ParticleSystem hitParticlePrefab;
+    [SerializeField] ParticleSystem deathParticlePrefab;
+    [SerializeField] AudioClip enemyDamagedSFX;
+    [SerializeField] AudioClip enemyDeathSFX;
+
+    AudioSource myAudioSource;
+
+    private void Start()
     {
-        
+        myAudioSource = GetComponent<AudioSource>();
     }
 
-     void OnParticleCollision(GameObject other)
+    void OnParticleCollision(GameObject other)
     {
         ProcessHit();
         if(hitPoints <= 1)
@@ -24,10 +30,20 @@ public class EnemyDamage : MonoBehaviour
     void ProcessHit()
     {
         hitPoints -= 1;
+        hitParticlePrefab.Play();
+        myAudioSource.PlayOneShot(enemyDamagedSFX);
     }
 
     private void KillEnemy()
     {
+        var particleInstance = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
+        particleInstance.transform.parent = FindObjectOfType<EnemySpawner>().gameObject.transform;
+        particleInstance.Play();
+
+        AudioSource.PlayClipAtPoint(enemyDeathSFX, Camera.main.transform.position);
+
+        Destroy(particleInstance.gameObject, particleInstance.main.duration);
         Destroy(gameObject);
     }
+
 }

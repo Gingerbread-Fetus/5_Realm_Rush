@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField] float movementPeriod = .5f;
+    [SerializeField] ParticleSystem goalParticlePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,20 +16,23 @@ public class EnemyMovement : MonoBehaviour
         StartCoroutine(FollowPath(path));
     }
     
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator FollowPath(List<Waypoint> path)
     {
         foreach (Waypoint waypoint in path)
         {
             transform.position = waypoint.transform.position;
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(movementPeriod);
         }
+        SelfDestruct();
     }
 
-    
+    //Enemy 'self-destructs' when reaching goal.
+    private void SelfDestruct()
+    {
+        var particleInstance = Instantiate(goalParticlePrefab, transform.position, Quaternion.identity);
+        particleInstance.transform.parent = FindObjectOfType<EnemySpawner>().gameObject.transform;
+        particleInstance.Play();
+        Destroy(particleInstance.gameObject, particleInstance.main.duration);
+        Destroy(gameObject);
+    }
 }
